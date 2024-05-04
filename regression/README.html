@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Linear Regression</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="linear-regression">Linear Regression</h1>
+<h2 id="1-handling-categorical-variables">1. Handling Categorical Variables</h2>
+<h3 id="11-ordinal-encoder">1.1 Ordinal Encoder</h3>
+<pre><code class="language-python"><span class="hljs-comment"># A numerical value for each ordinary class in the column</span>
+<span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> OrdinalEncoder
+ordinal_encoder = OrdinalEncoder()
+encoded_variable = ordinal_encoder.fit_transform(df[[<span class="hljs-string">&quot;Categorical Variable&quot;</span>]])
+</code></pre>
+<h3 id="12-one-hot-encoder">1.2 One Hot Encoder</h3>
+<pre><code class="language-python"><span class="hljs-comment"># With several classes, models may be biased with ordinal values </span>
+<span class="hljs-comment"># one hot create one column for each class. </span>
+
+<span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> OneHotEncoder
+one_hot_encoder = OneHotEncoder()
+encoded_matrix = one_hot_encoder.fit_transform(df[[<span class="hljs-string">&quot;Categorical Variable&quot;</span>]])
+</code></pre>
+<h2 id="2-traintest-split--linear-regression-fit--model-evaluating">2. Train/Test Split + Linear Regression Fit + Model Evaluating</h2>
+<pre><code class="language-python"><span class="hljs-comment"># Train Test Split</span>
+<span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(test_size = <span class="hljs-number">0.2</span>)
+</code></pre>
+<h3 id="22-linear-regression">2.2 Linear Regression</h3>
+<pre><code class="language-python"><span class="hljs-comment"># Training the linear regression model</span>
+<span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LinearRegression
+
+linear_regression = LinearRegression()
+linear_regression.fit(X_train, Y_train)
+
+train_predicitons = linear_regression.fit(X_train)
+</code></pre>
+<h3 id="23-scores">2.3 Scores</h3>
+<pre><code class="language-python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> mean_squared_error 
+lin_mse = mean_squared_error(Y_train , predicions)
+</code></pre>
+<h2 id="3-cross-validation">3. Cross Validation</h2>
+<p>Evaluation for novel data.</p>
+<pre><code class="language-python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> cross_val_score
+
+scores =  cross_val_score(linear_regression, X_train , Y_train , scoring = <span class="hljs-string">&quot;neg_mean_squared_error&quot;</span> , cv = <span class="hljs-number">10</span>) 
+
+linear_rmse_scores = np.sqrt(-scores)
+</code></pre>
+<h2 id="4-gridsearch">4. GridSearch</h2>
+<pre><code class="language-python">    param_grid = [
+        {}
+    ]
+
+
+</code></pre>
+
+            
+            
+        </body>
+        </html>
