@@ -1,2 +1,2 @@
 # Linear Regression 
-Classic example on real state data
+Linear Regression classic example over Real State data (House Pricing)
