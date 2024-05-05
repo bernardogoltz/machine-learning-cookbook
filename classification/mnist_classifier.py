@@ -50,6 +50,43 @@ def plot_number_is(k):
     plt.imshow(X_train[k].reshape(28,28),cmap = 'binary')
 
 
+from sklearn.metrics import confusion_matrix
+confusion_matrix(Y_train_n , sgd_clf.predict(X_train))
+# [43457,    44]
+# [  341,  5158]
+
+y_train_pred = sgd_clf.predict(X_train)
+
+from sklearn.metrics import precision_score , recall_score 
+from sklearn.metrics import classification_report
+
+precision_score(Y_train_n , y_train_pred)
+recall_score(Y_train_n , y_train_pred)
+
+classification_report(Y_train_n , y_train_pred)
+"""
+              precision    recall  f1-score   support
+
+       False       0.99      1.00      1.00     43501
+        True       0.99      0.94      0.96      5499
+
+    accuracy                           0.99     49000
+   macro avg       0.99      0.97      0.98     49000
+weighted avg       0.99      0.99      0.99     49000
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
