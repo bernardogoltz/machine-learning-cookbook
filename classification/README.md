@@ -5,7 +5,7 @@
 ## 1. Binary Classifier
 - Categorize into one of two categories
 - Handwritten Digit Binary Classifier
-Label data and Target -> Train/Test split  
+- Label data and Target -> Train/Test split  
 
 ### Evaluating model's performance 
 
