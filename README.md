@@ -1,4 +1,4 @@
-# Machine Learning: _sklearn_ general approach
+# Machine Learning: _sklearn_ examples
 
 ## 1 - Instaling Requirements
 
